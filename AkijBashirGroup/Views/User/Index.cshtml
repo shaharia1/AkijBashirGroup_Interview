@@ -1,0 +1,167 @@
+﻿@{
+	ViewData["Title"] = "User";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+
+	<style>
+		.row {
+			margin-bottom: 10px;
+		}
+	</style>
+</head>
+<body>
+	<h2>Registration Form</h2>
+
+	<div class="row">
+		<div class="col-md-6">
+			<input type="text" class="form-control" id="fullName" placeholder="Full Name" name="fullName">
+			<div id="fullNameError" class="error"></div><br>
+		</div>
+		<div class="col-md-6">
+			<input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<input type="text" class="form-control" id="mobileNumber" placeholder="Enter Mobile Number" name="MobileNumber">
+			<div id="mobileNumberError" class="error"></div><br>
+		</div>
+		<div class="col-md-6">
+			<textarea class="form-control" id="address" placeholder="Enter Address" name="Address"></textarea>
+			<div id="addressError" class="error"></div><br>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<input type="text" class="form-control" id="username" placeholder="Enter User Name" name="Username">
+			<div id="usernameError" class="error"></div><br>
+		</div>
+		<div class="col-md-6">
+			<input type="password" class="form-control" id="password" placeholder="Enter Password" name="password">
+			<div id="passwordError" class="error"></div><br>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12" align="right">
+			<button type="submit" id="submit" class="btn btn-primary">Submit</button>
+		</div>
+	</div>
+
+
+
+	<script>
+
+		$(document).ready(function () {
+
+			const fullNameInput = document.getElementById("fullName");
+			const usernameInput = document.getElementById("username");
+			const passwordInput = document.getElementById("password");
+			const mobileNumberInput = document.getElementById("mobileNumber");
+			const addressInput = document.getElementById("address");
+
+			const usernameError = document.getElementById("usernameError");
+			const passwordError = document.getElementById("passwordError");
+
+			// Add event listeners to input fields
+			fullNameInput.addEventListener("input", validateFullName);
+			usernameInput.addEventListener("input", validateUsername);
+			passwordInput.addEventListener("input", validatePassword);
+			mobileNumberInput.addEventListener("input", validateMobileNumber);
+			addressInput.addEventListener("input", validateaddress);
+
+			function validateUsername() {
+				const username = usernameInput.value;
+				if (username.length < 6 || !/^[a-zA-Z0-9]+$/.test(username)) {
+					usernameError.textContent = "Username must be at least 6 characters and contain only letters and numbers.";
+				} else {
+					usernameError.textContent = "";
+				}
+			}
+
+			function validateFullName() {
+				const fullNameInput = document.getElementById("fullName");
+				const fullNameValue = fullNameInput.value;
+				const fullNameError = document.getElementById("fullNameError");
+
+				if (!/^[A-Za-z\s]+$/.test(fullNameValue)) {
+					fullNameError.textContent = "Full Name cannot contain special characters.";
+				} else {
+					fullNameError.textContent = ""; // Clear error message
+				}
+			}
+
+			function validateaddress() {
+				const addressInput = document.getElementById("address");
+				const fullNameValue = addressInput.value;
+				const addressError = document.getElementById("addressError");
+
+				if (!/^[A-Za-z\s]+$/.test(fullNameValue)) {
+					addressError.textContent = "Full Name cannot contain special characters.";
+				} else {
+					addressError.textContent = ""; // Clear error message
+				}
+			}
+
+
+			function validatePassword() {
+				const password = passwordInput.value;
+				if (password.length < 8) {
+					passwordError.textContent = "Password must be at least 8 characters";
+				} else {
+					passwordError.textContent = "";
+				}
+			}
+
+			function validateMobileNumber() {
+				const mobileNumberInput = document.getElementById("mobileNumber");
+				const mobileNumberValue = mobileNumberInput.value;
+				const mobileNumberError = document.getElementById("mobileNumberError");
+
+				// Check if the input contains only numeric characters and has no spaces
+				if (!/^[0-9]+$/.test(mobileNumberValue)) {
+					mobileNumberError.textContent = "Mobile Number must be numeric with no spaces.";
+				} else {
+					mobileNumberError.textContent = ""; // Clear error message
+				}
+			}
+
+
+
+			$("#submit").click(function () {
+
+				$.ajax(
+					{
+						type: "POST", //HTTP POST Method
+						url: "/Home/SaveUser", // Controller/View
+						dataType: "json",
+						data: {
+							FullName: $('#fullName').val(),
+							Email: $('#email').val(),
+							MobileNumber: $('#mobileNumber').val(),
+							Address: $('#address').val(),
+							Username: $('#username').val(),
+							Password: $('#password').val(),
+						},
+						success: function (data) {
+							console.log(data);
+
+							alert(data.msg)
+
+						}
+					});
+
+			});
+
+
+
+
+
+		});
+
+	</script>
+</body>
+</html>

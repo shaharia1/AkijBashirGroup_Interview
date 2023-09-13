@@ -1,0 +1,115 @@
+﻿@{
+	ViewData["Title"] = "Home Page";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<style>
+		.row{
+			margin-bottom:10px;
+		}
+	</style>
+</head>
+<body>
+	<h2>Registration Form</h2>
+	@*<div class="row">
+		<div class="col-md-12">
+			<form id="registrationForm" action="/register" method="post">
+				<label for="fullName">Full Name:</label>
+				<input type="text" id="fullName" name="fullName" required><br>
+
+				<label for="email">Email:</label>
+				<input type="email" id="email" name="email" required><br>
+
+				<label for="mobileNumber">Mobile Number:</label>
+				<input type="tel" id="mobileNumber" name="mobileNumber" pattern="[0-9]+" required><br>
+
+				<label for="address">Address:</label>
+				<textarea id="address" name="address" required></textarea><br>
+
+				<label for="username">Username:</label>
+				<input type="text" id="username" name="username" pattern="[A-Za-z0-9]{6,}" required><br>
+
+				<label for="password">Password:</label>
+				<input type="password" id="password" name="password" minlength="8" required><br>
+
+				<input type="submit" value="Register">
+			</form>
+		</div>		
+	</div>*@
+
+	<div class="row">
+		<div class="col-md-6">
+			<input type="text" class="form-control" id="fullName" placeholder="Full Name" name="fullName">
+		</div>
+		<div class="col-md-6">
+			<input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<input type="text" class="form-control" id="mobileNumber" placeholder="Enter Mobile Number" name="MobileNumber">
+		</div>
+		<div class="col-md-6">
+			@*<input type="text" class="form-control" id="email" placeholder="Address" name="Address">*@
+			<textarea class="form-control" id="address" placeholder="Enter Address" name="Address"></textarea>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<input type="text" class="form-control" id="username" placeholder="Enter User Name" name="Username">
+		</div>
+		<div class="col-md-6">
+			<input type="password" class="form-control" id="password" placeholder="Enter Password" name="password">
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-md-12" align="right">
+			<button type="submit" id="submit" class="btn btn-primary">Submit</button>
+		</div>
+	</div>
+
+	
+
+	<script>
+		
+		$(document).ready(function () {
+
+			$("#submit").click(function () {
+				console.log("DAta");
+				$.ajax(
+					{
+						type: "POST", //HTTP POST Method
+						url: "/Home/SaveUser", // Controller/View
+						dataType: "json",
+						data: { 
+							FullName: $('#fullName').val(),
+							Email: $('#email').val(),
+							MobileNumber: $('#mobileNumber').val(),
+							Address: $('#address').val(),
+							Username: $('#username').val(),
+							Password: $('#password').val(),
+						},
+						success: function (data) {
+							console.log(data);						
+
+								//alert(data.Message)
+							
+						}
+					});
+
+			});
+
+
+
+
+
+		});
+
+	</script>
+</body>
+</html>
+
